@@ -39,7 +39,7 @@ The following container images have been cached:
 
 ## Visual Studio 2019 Enterprise
 
-_Version:_ VisualStudio/16.2.2+29209.62<br/>
+_Version:_ VisualStudio/16.2.3+29215.179<br/>
 _Location:_ C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
 
 The following workloads and components are installed with Visual Studio 2019:
@@ -323,7 +323,7 @@ _Description:_ .NET has been configured to use TLS 1.2 by default
 
 ## Azure CLI
 
-_Version:_ 2.0.71
+_Version:_ 2.0.72
 _Environment:_
 * PATH: contains location of az.cmd
 
@@ -358,13 +358,13 @@ _Location:_ C:/hostedtoolcache/windows/Python/2.7*/x64
 
 ## Git
 
-_Version:_ 2.22.0<br/>
+_Version:_ 2.23.0<br/>
 _Environment:_
 * PATH: contains location of git.exe
 
 ## Git Large File Storage (LFS)
 
-_Version:_ 2.7.2<br/>
+_Version:_ 2.8.0<br/>
 _Environment:_
 * PATH: contains location of git-lfs.exe
 * GIT_LFS_PATH: location of git-lfs.exe
@@ -391,20 +391,20 @@ _Environment:_
 
 ## Boost
 
-#### 
+####
 
-* PATH: contains the location of Boost version 
+* PATH: contains the location of Boost version
 * BOOST_ROOT: root directory of the Boost version  installation
 * BOOST_ROOT_1_69_0: root directory of the Boost version  installation
 
 
 ## PHP (x64)
 
-#### 7.3.8
+#### 7.3.9
 
 _Environment:_
-* PATH: contains the location of php.exe version 7.3.8
-* PHPROOT: root directory of the PHP 7.3.8 installation
+* PATH: contains the location of php.exe version 7.3.9
+* PHPROOT: root directory of the PHP 7.3.9 installation
 
 ## Ruby (x64)
 
@@ -479,7 +479,7 @@ _Environment:_
 
 ## npm
 
-_Version:_ 6.11.0<br/>
+_Version:_ 6.9.0<br/>
 _Environment:_
 * PATH: contains location of npm.cmd
 
@@ -516,7 +516,7 @@ _Environment:_
 
 ## Gradle
 
-_Version:_ 5.6<br/>
+_Version:_ 5.6.1<br/>
 _Environment:_
 * PATH: contains location of gradle
 
@@ -641,7 +641,7 @@ _Environment:_
 
 ## TypeScript
 
-_Version:_ Version 3.5.3<br/>
+_Version:_ Version 3.6.2<br/>
 
 ## Miniconda
 
@@ -651,7 +651,7 @@ _Environment:_
 
 ## Azure CosmosDb Emulator
 
-_Version:_ 2.4.5.0<br/>
+_Version:_ 2.5.6.0<br/>
 _Location:_ C:\Program Files\Azure Cosmos DB Emulator\
 
 ## 7zip
@@ -684,11 +684,11 @@ _Version:_ 1.1.1c at C:\Program Files\Git\usr\bin\openssl.exe<br/>_Version:_ 1.1
 
 ## Cloud Foundry CLI
 
-_Version:_ 6.46.0<br/>
+_Version:_ 6.46.1<br/>
 
 ## Vcpkg
 
-_Version:_ 2019.08.16-nohash<br/>
+_Version:_ 2019.08.27-nohash<br/>
 _Environment:_
 * PATH: contains location of the vcpkg directory
 * VCPKG_INSTALLATION_ROOT: root directory of the vcpkg installation
