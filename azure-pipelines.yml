@@ -4,9 +4,8 @@ trigger:
 - master
 - testing/20191209.1
 
-queue:
-  name: 'Azure Pipelines'
-
+pool:
+  vmImage: 'win2019'
 
 steps:
 - script: echo Hello, world!
