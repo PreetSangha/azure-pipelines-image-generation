@@ -75,9 +75,9 @@ Function GenerateResourcesAndImage {
         [ImageType] $ImageType,
         [Parameter(Mandatory = $True)]
         [string] $AzureLocation,
-        [Parameter(Mandatory = $False)]
-        [int] $SecondsToWaitForServicePrincipalSetup = 30,
-        [Parameter(Mandatory = $False)]
+        [Parameter(Mandatory = $True)]
+        [int] $SecondsToWaitForServicePrincipalSetup,
+        [Parameter(Mandatory = $True)]
         [Switch] $Force
     )
 
