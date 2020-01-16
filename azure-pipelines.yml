@@ -23,4 +23,5 @@ steps:
   inputs:
     azureSubscription: 'BigBang'
     ScriptType: 'FilePath'
-    ScriptPath: '.\helpers\GenerateResourcesAndImage.ps1'
+    ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
+    preferredAzurePowerShellVersion: latestVersion
