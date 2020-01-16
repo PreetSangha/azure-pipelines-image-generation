@@ -159,4 +159,29 @@ Function GenerateResourcesAndImage {
 }
 
 
-Write-Output "Hello from script"
+$bigBangSub = "70e79a08-a3f2-4656-9b89-1d263835ba25";
+#$preetMpnSub = "c0c577e0-1dee-42d3-bf3c-c3124f7a948c";
+
+$imageRoot = "ImageGenerationRepositoryRoot"
+
+$resourceGroup = "preet-test-rg" ;
+$imageType = 1;
+$location = "australiaeast";
+$SecondsToWaitForServicePrincipalSetup = 1;
+
+
+
+$mySubscription = $bigBangSub
+
+Write-Output "Started on sub $mySubscription"
+
+GenerateResourcesAndImage
+    -Force $True`
+    -SecondsToWaitForServicePrincipalSetup  5 `
+    -SubscriptionId $mySubscription `
+    -ResourceGroupName $resourceGroup `
+    -ImageGenerationRepositoryRoot $imageRoot `
+    -ImageType $imageType `
+    -AzureLocation $location
+
+Write-Output "Finished";
