@@ -8,15 +8,15 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# - script: echo Hello, world!
+#   displayName: 'Run a one-line script'
 
-- task: InlineAzurePowershell@1
-  displayName: "Run azure inline script"
-  inputs:
-    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-    ConnectedServiceNameARM: 'BigBang'
-    Script: 'Write-Output ''Hello world'''
+# - task: InlineAzurePowershell@1
+#   displayName: "Run azure inline script"
+#   inputs:
+#     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+#     ConnectedServiceNameARM: 'BigBang'
+#     Script: 'Write-Output ''Hello world'''
 
 - task: AzurePowerShell@5
   displayName: "Run azure GenerateResourcesAndImage script"
