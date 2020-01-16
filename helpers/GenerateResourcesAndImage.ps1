@@ -175,8 +175,8 @@ $mySubscription = $bigBangSub
 
 Write-Output "Started on sub $mySubscription"
 
-GenerateResourcesAndImage
-    -Force $True`
+GenerateResourcesAndImage `
+    -Force $True `
     -SecondsToWaitForServicePrincipalSetup  5 `
     -SubscriptionId $mySubscription `
     -ResourceGroupName $resourceGroup `
