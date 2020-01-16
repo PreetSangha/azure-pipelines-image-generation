@@ -1,10 +1,12 @@
 # Preet's test Packer pipeline
 
 trigger:
+- master
 - testing/20191209.1
 
-pool:
-  vmImage: 'win2019'
+queue:
+  name: 'Azure Pipelines'
+
 
 steps:
 - script: echo Hello, world!
