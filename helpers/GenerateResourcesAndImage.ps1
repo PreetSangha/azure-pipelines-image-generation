@@ -175,6 +175,13 @@ $mySubscription = $bigBangSub
 
 Write-Output "Started on sub $mySubscription"
 
-GenerateResourcesAndImage    -Force $True     -SecondsToWaitForServicePrincipalSetup  5    -SubscriptionId $mySubscription     -ResourceGroupName $resourceGroup    -ImageGenerationRepositoryRoot $imageRoot     -ImageType $imageType     -AzureLocation $location
+GenerateResourcesAndImage `
+    -SubscriptionId $mySubscription `
+    -ResourceGroupName $resourceGroup `
+    -ImageGenerationRepositoryRoot $imageRoot `
+    -ImageType $imageType `
+    -AzureLocation $location `
+    -SecondsToWaitForServicePrincipalSetup 30 `
+    -Force $true
 
 Write-Output "Finished";
