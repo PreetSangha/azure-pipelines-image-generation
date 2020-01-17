@@ -40,8 +40,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Install-Module AzureRM 
-      Import-Module AzureRM 
+      Install-Module AzureRM -Force
+      Import-Module AzureRM -Force
+      Login-AzureRmAccount 
       Get-AzureRmResourceGroup
     failOnStderr: true
 
