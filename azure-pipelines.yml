@@ -8,7 +8,7 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- script: packer
+- script: packer.exe
   displayName: 'Run a one-line script'
 
 # - task: InlineAzurePowershell@1
