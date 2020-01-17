@@ -36,13 +36,13 @@ steps:
 #     scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
 #     addSpnToEnvironment: true
 
-- task: PowerShell@2
+- task: AzurePowerShell@5
   inputs:
-    targetType: 'inline'
-    script: |
+    azureSubscription: 'BigBang'
+    ScriptType: 'InlineScript'
+    Inline: |
       Install-Module AzureRM -Force
       Import-Module AzureRM -Force
-      Login-AzureRmAccount 
-      Get-AzureRmResourceGroup
-    failOnStderr: true
-
+      Connect-AzureRmAccount
+    FailOnStandardError: true
+    preferredAzurePowerShellVersion: '3.8.0'
