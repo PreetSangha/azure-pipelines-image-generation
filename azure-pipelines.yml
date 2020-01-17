@@ -41,7 +41,7 @@ steps:
     azureSubscription: 'BigBang'
     ScriptType: 'InlineScript'
     Inline: |
-      Install-Module AzureRM -Force
+      Install-Module AzureRM -Force -AllowClobber
       Import-Module AzureRM -Force
       Connect-AzureRmAccount -Tenant $env:tenantId  -SubscriptionId  $env:subsciptionId
     FailOnStandardError: true
