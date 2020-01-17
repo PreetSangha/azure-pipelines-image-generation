@@ -28,21 +28,10 @@ steps:
 
 #  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
 
-# - task: AzureCLI@2
-#   inputs:
-#     azureSubscription: 'BigBang'
-#     scriptType: 'ps'
-#     scriptLocation: 'scriptPath'
-#     scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
-#     addSpnToEnvironment: true
-
-- task: AzurePowerShell@5
+- task: AzureCLI@2
   inputs:
     azureSubscription: 'BigBang'
-    ScriptType: 'InlineScript'
-    Inline: |
-      Install-Module AzureRM -Force -AllowClobber
-      Import-Module AzureRM -Force
-      Connect-AzureRmAccount -Tenant $env:tenantId  -SubscriptionId  $env:subsciptionId
-    FailOnStandardError: true
-    preferredAzurePowerShellVersion: latestVersion
+    scriptType: 'ps'
+    scriptLocation: 'scriptPath'
+    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+    addSpnToEnvironment: true
