@@ -86,7 +86,7 @@ Function GenerateResourcesAndImage {
     $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
 
     # Login-AzureRmAccount
-    Set-AzureRmContext -SubscriptionId $SubscriptionId
+    #Set-AzureRmContext -SubscriptionId $SubscriptionId
 
     $alreadyExists = $true;
     try {
