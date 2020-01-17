@@ -1,3 +1,5 @@
+Import-Module AzureRM
+
 $ErrorActionPreference = 'Stop'
 
 enum ImageType {
