@@ -1,3 +1,5 @@
+Install-Module AzureRM
+
 Import-Module AzureRM
 
 $ErrorActionPreference = 'Stop'
