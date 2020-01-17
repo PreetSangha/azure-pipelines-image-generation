@@ -159,7 +159,7 @@ Function GenerateResourcesAndImage {
 }
 
 
-$bigBangSub = "70e79a08-a3f2-4656-9b89-1d263835ba25";
+$bigBangSub = '70e79a08-a3f2-4656-9b89-1d263835ba25';
 
 $imageRoot = "ImageGenerationRepositoryRoot"
 
@@ -175,13 +175,15 @@ $mySubscription = $bigBangSub
 
 Write-Output "Started on sub $mySubscription"
 
-GenerateResourcesAndImage `
+
+Write-Output $mySubscription.GetType().FullName
+
+GenerateResourcesAndImage  -Force `
     -SubscriptionId $mySubscription `
     -ResourceGroupName $resourceGroup `
     -ImageGenerationRepositoryRoot $imageRoot `
     -ImageType $imageType `
     -AzureLocation $location `
-    -SecondsToWaitForServicePrincipalSetup 30 `
-    -Force $true
+    -SecondsToWaitForServicePrincipalSetup 30
 
 Write-Output "Finished";
