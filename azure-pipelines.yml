@@ -8,8 +8,8 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-# - script: echo Hello, world!
-#   displayName: 'Run a one-line script'
+- script: packer
+  displayName: 'Run a one-line script'
 
 # - task: InlineAzurePowershell@1
 #   displayName: "Run azure inline script"
@@ -18,10 +18,23 @@ steps:
 #     ConnectedServiceNameARM: 'BigBang'
 #     Script: 'Write-Output ''Hello world'''
 
-- task: AzurePowerShell@5
-  displayName: "Run azure GenerateResourcesAndImage script"
-  inputs:
-    azureSubscription: 'BigBang'
-    ScriptType: 'FilePath'
-    ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
-    preferredAzurePowerShellVersion: latestVersion
+# - task: AzurePowerShell@5
+#   displayName: "Run azure GenerateResourcesAndImage script"
+#   inputs:
+#     azureSubscription: 'BigBang'
+#     ScriptType: 'FilePath'
+#     ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
+#     preferredAzurePowerShellVersion: latestVersion
+
+#  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
+
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: 'BigBang'
+#     scriptType: 'ps'
+#     scriptLocation: 'scriptPath'
+#     scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+#     addSpnToEnvironment: true
+
+
+
