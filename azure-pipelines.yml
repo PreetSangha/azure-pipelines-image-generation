@@ -45,4 +45,4 @@ steps:
       Import-Module AzureRM -Force
       Connect-AzureRmAccount -Tenant $env:tenantId  -SubscriptionId  $env:subsciptionId
     FailOnStandardError: true
-    preferredAzurePowerShellVersion: '3.8.0'
+    preferredAzurePowerShellVersion: '4.2.1'
