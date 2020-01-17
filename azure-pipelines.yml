@@ -43,6 +43,6 @@ steps:
     Inline: |
       Install-Module AzureRM -Force
       Import-Module AzureRM -Force
-      Connect-AzureRmAccount
+      Connect-AzureRmAccount -Tenant $env:tenantId  -SubscriptionId  $env:subsciptionId
     FailOnStandardError: true
     preferredAzurePowerShellVersion: '3.8.0'
