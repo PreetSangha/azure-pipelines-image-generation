@@ -86,7 +86,8 @@ Function GenerateResourcesAndImage {
     )
 
     $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
-    $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
+    $ServicePrincipalClientSecret = $env:servicePrincipalKey;
+    $InstallPassword = "PREET";
     Write-Output "", "Creating Service Credential"
     $password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Force
     $Credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
