@@ -2,6 +2,7 @@
 
 queue:
   name: Preets
+  timeoutInMinutes: 240
 
 
 trigger:
