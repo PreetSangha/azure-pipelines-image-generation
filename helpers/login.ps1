@@ -1,9 +1,9 @@
 Write-Output "login to Azure"
 
-Get-ChildItem Env: | Sort Name
+Get-ChildItem Env: | Sort-Object Name
 
-$Credential = Get-Credential
+$Credential = Get-AutomationPSCredential -Name $env:USERNAME
 
 $Credential | Get-Member
 
-Connect-AzureRmAccount -?
+Connect-AzureRmAccount -Credential $Credential -TenantId $env:tenantId -ServicePrincipal
