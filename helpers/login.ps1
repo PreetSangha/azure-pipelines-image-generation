@@ -4,7 +4,9 @@ Get-ChildItem Env: | Sort-Object Name
 
 Install-Module AzureAutomationAuthoringToolkit -Scope CurrentUser -Force
 
-$Credential = Get-AutomationPSCredential -Name $env:servicePrincipalId
+Get-Credential -
+
+$credential = New-Object System.Management.Automation.PSCredential($env:servicePrincipalId, $env:servicePrincipalKey) -ErrorAction Stop
 
 $Credential | Get-Member
 
