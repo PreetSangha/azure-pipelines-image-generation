@@ -146,7 +146,7 @@ Function GenerateResourcesAndImage {
     $tenantId = $env:tenantId
 
     Write-Output "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
-
+    packer.exe
     # packer.exe build -on-error=ask `
     #     -var "client_id=$($spClientId)"  `
     #     -var "client_secret=$($ServicePrincipalClientSecret)"  `
