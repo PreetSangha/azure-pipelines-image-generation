@@ -27,20 +27,20 @@ steps:
 
 #  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
 
-- task: PowerShell@2
-  displayName: Install Packer
-  inputs:
-    targetType: 'inline'
-    script: |
-      packer --version
+# - task: PowerShell@2
+#   displayName: Install Packer
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       packer --version
 
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'BigBang'
-    scriptType: 'ps'
-    scriptLocation: 'scriptPath'
-    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
-    addSpnToEnvironment: true
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: 'BigBang'
+#     scriptType: 'ps'
+#     scriptLocation: 'scriptPath'
+#     scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+#     addSpnToEnvironment: true
 
   # Build machine image
   # Build a machine image using Packer, which may be used for Azure Virtual machine scale set deployment
