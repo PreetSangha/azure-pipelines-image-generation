@@ -87,12 +87,12 @@ Function GenerateResourcesAndImage {
 
     $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
     $ServicePrincipalClientSecret = $env:servicePrincipalKey;
-   
+
     Write-Output "", "Creating Service Credential"
     $password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Force
     $Credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
     $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
-    
+
     Write-Output "Logging in"
     Login-AzureRmAccount -Credential $Credential -TenantId $env:tenantId -ServicePrincipal
 
@@ -153,7 +153,7 @@ Get-ChildItem Env: | Sort-Object Name
 
     Write-Output "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
 
-    packer.exe build -on-error=ask `
+    C:\ProgramData\chocolatey\lib\packer\tools\packer.exe build -on-error=ask `
         -var "client_id=$($spClientId)"  `
         -var "client_secret=$($ServicePrincipalClientSecret)"  `
         -var "subscription_id=$($SubscriptionId)"  `
