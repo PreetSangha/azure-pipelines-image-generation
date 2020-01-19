@@ -4,7 +4,7 @@ trigger:
   - packer
 
 pool:
-  vmImage: 'windows-2019'
+  queue: 'serko-enterprise'
 
 steps:
 # - script: echo Hello, world!
