@@ -10,19 +10,19 @@ trigger:
 steps:
 
 - task: PowerShell@2
-  displayName: Install Packer
+  displayName: Check Packer
   inputs:
     targetType: 'inline'
     script: |
-      Write-Output "Hello"
+      packer.exe --version
 
-# - task: AzureCLI@2
-#   inputs:
-#     azureSubscription: 'BigBang'
-#     scriptType: 'ps'
-#     scriptLocation: 'scriptPath'
-#     scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
-#     addSpnToEnvironment: true
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'BigBang'
+    scriptType: 'ps'
+    scriptLocation: 'scriptPath'
+    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+    addSpnToEnvironment: true
 
   # Build machine image
   # Build a machine image using Packer, which may be used for Azure Virtual machine scale set deployment
