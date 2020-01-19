@@ -2,7 +2,9 @@ Write-Output "login to Azure"
 
 Get-ChildItem Env: | Sort-Object Name
 
-$credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $env:servicePrincipalId,$env:servicePrincipalKey  -ErrorAction Stop
+$password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Force
+
+$credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
 
 $Credential | Get-Member
 
