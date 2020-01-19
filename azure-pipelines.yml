@@ -1,10 +1,11 @@
 # Preet's test Packer pipeline
 
+queue:
+  name: Preets
+
+
 trigger:
   - packer
-
-queue:
-  name: Serko-Enterprise
 
 steps:
 
