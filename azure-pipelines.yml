@@ -1,8 +1,7 @@
 # Preet's test Packer pipeline
 
 trigger:
-  - master
-  - preet
+  - packer
 
 pool:
   vmImage: 'windows-2019'
