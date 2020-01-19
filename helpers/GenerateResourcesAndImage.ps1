@@ -163,7 +163,7 @@ Function GenerateResourcesAndImage {
 
 $bigBangSub = '70e79a08-a3f2-4656-9b89-1d263835ba25';
 
-$imageRoot = "ImageGenerationRepositoryRoot"
+$imageRoot = $env:BUILD_SOURCESDIRECTORY
 
 #$preetMpnSub = "c0c577e0-1dee-42d3-bf3c-c3124f7a948c";
 $resourceGroup = "preet-test-rg" ;
