@@ -4,43 +4,43 @@ trigger:
   - master
   - preet
 
-  pool:
-    vmImage: 'windows-2019'
+pool:
+  vmImage: 'windows-2019'
 
-  steps:
-  # - script: echo Hello, world!
-  #   displayName: 'Run a one-line script'
+steps:
+# - script: echo Hello, world!
+#   displayName: 'Run a one-line script'
 
-  # - task: InlineAzurePowershell@1
-  #   displayName: "Run azure inline script"
-  #   inputs:
-  #     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-  #     ConnectedServiceNameARM: 'BigBang'
-  #     Script: 'Write-Output ''Hello world'''
+# - task: InlineAzurePowershell@1
+#   displayName: "Run azure inline script"
+#   inputs:
+#     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+#     ConnectedServiceNameARM: 'BigBang'
+#     Script: 'Write-Output ''Hello world'''
 
-  # - task: AzurePowerShell@5
-  #   displayName: "Run azure GenerateResourcesAndImage script"
-  #   inputs:
-  #     azureSubscription: 'BigBang'
-  #     ScriptType: 'FilePath'
-  #     ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
-  #     preferredAzurePowerShellVersion: latestVersion
+# - task: AzurePowerShell@5
+#   displayName: "Run azure GenerateResourcesAndImage script"
+#   inputs:
+#     azureSubscription: 'BigBang'
+#     ScriptType: 'FilePath'
+#     ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
+#     preferredAzurePowerShellVersion: latestVersion
 
-  #  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
+#  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
 
-  - task: PowerShell@2
-    displayName: Install Packer
-    inputs:
-      targetType: 'inline'
-      script: 'choco.exe install packer --yes --verbose'
+- task: PowerShell@2
+  displayName: Install Packer
+  inputs:
+    targetType: 'inline'
+    script: 'choco.exe install packer --yes --verbose'
 
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: 'BigBang'
-      scriptType: 'ps'
-      scriptLocation: 'scriptPath'
-      scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
-      addSpnToEnvironment: true
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'BigBang'
+    scriptType: 'ps'
+    scriptLocation: 'scriptPath'
+    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+    addSpnToEnvironment: true
 
   # Build machine image
   # Build a machine image using Packer, which may be used for Azure Virtual machine scale set deployment
