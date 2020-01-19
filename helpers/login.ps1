@@ -6,6 +6,9 @@ $password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Forc
 
 $credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
 
-$Credential | Get-Member
+Write-Output "Have Credential for" $credential.UserName
 
+# Install-Module AzureRM -Force -AllowClobber -Verbose
+
+Import-Module AzureRM
 Connect-AzureRmAccount -Credential $Credential -TenantId $env:tenantId -ServicePrincipal
