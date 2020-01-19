@@ -31,4 +31,4 @@ $sp = Get-AzureRmADServicePrincipal -ServicePrincipalName $env:servicePrincipalI
 $spAppId = $sp.ApplicationI
 $spClientId = $sp.ApplicationId
 $spObjectId = $sp.Id
-Write-Output "Service Principal: " $sp.DisplayName $spAppId $spClientId $spObjectId
+Write-Output "Service Principal: ",$sp.DisplayName, $spAppId, $spClientId, $spObjectId
