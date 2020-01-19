@@ -98,24 +98,24 @@ Function GenerateResourcesAndImage {
     Write-Output "Setting Subscription"
     Set-AzureRmContext -SubscriptionId $SubscriptionId
 
-    $alreadyExists = $true;
-    try {
-        Get-AzureRmResourceGroup -Name $ResourceGroupName
-    }
-    catch {
-        $alreadyExists = $false;
-    }
+    # $alreadyExists = $true;
+    # try {
+    #     Get-AzureRmResourceGroup -Name $ResourceGroupName
+    # }
+    # catch {
+    #     $alreadyExists = $false;
+    # }
 
-    if ($alreadyExists) {
-        if($Force -eq $true) {
+    # if ($alreadyExists) {
+    #     if($Force -eq $true) {
 
-            Write-Output "Cleanup existing resource group $ResourceGroupName if it already exitsted before"
-            Remove-AzureRmResourceGroup -Name $ResourceGroupName -Force
-        }
-    }
+    #         Write-Output "Cleanup existing resource group $ResourceGroupName if it already exitsted before"
+    #         Remove-AzureRmResourceGroup -Name $ResourceGroupName -Force
+    #     }
+    # }
 
-    Write-Output "", "Creating resource group $ResourceGroupName"
-    New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation
+    # Write-Output "", "Creating resource group $ResourceGroupName"
+    # New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation
 
     # This script should follow the recommended naming conventions for azure resources
     $storageAccountName = if($ResourceGroupName.EndsWith("-rg")) {
@@ -126,8 +126,8 @@ Function GenerateResourcesAndImage {
     $storageAccountName = $storageAccountName.Replace("-", "").Replace("_", "").Replace("(", "").Replace(")", "").ToLower()
     $storageAccountName += "001"
 
-    Write-Output "", "Creating Storage Account $storageAccountName"
-    New-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $storageAccountName -Location $AzureLocation -SkuName "Standard_LRS"
+    # Write-Output "", "Creating Storage Account $storageAccountName"
+    # New-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $storageAccountName -Location $AzureLocation -SkuName "Standard_LRS"
 
     Write-Output "", "Getting Service Principal"
     $sp = Get-AzureRmADServicePrincipal -ServicePrincipalName $env:servicePrincipalId
