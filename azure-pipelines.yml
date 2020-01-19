@@ -14,7 +14,11 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      packer.exe --version
+      " ---- "
+      Get-ChildItem Env: | Sort-Object Name
+      " ---- "
+      choco --version
+      packer --version
 
 - task: AzureCLI@2
   inputs:
