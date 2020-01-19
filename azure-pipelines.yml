@@ -17,8 +17,8 @@ steps:
       " ---- "
       Get-ChildItem Env: | Sort-Object Name
       " ---- "
-      choco --version
-      packer --version
+      C:\ProgramData\chocolatey\bin\choco.exe --version
+      C:\ProgramData\chocolatey\lib\packer\tools\packer.exe --version
 
 - task: AzureCLI@2
   inputs:
