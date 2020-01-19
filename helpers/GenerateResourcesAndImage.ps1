@@ -85,8 +85,8 @@ Function GenerateResourcesAndImage {
         [Switch] $Force
     )
 
-    # $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
-    # $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
+    $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
+    $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
     Write-Output "", "Creating Service Credential"
     $password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Force
     $Credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
@@ -130,7 +130,7 @@ Function GenerateResourcesAndImage {
 
     Write-Output "", "Getting Service Principal"
     $sp = Get-AzureRmADServicePrincipal -ServicePrincipalName $env:servicePrincipalId
-    $spAppId = $sp.ApplicationId
+    #$spAppId = $sp.ApplicationId
     $spClientId = $sp.ApplicationId
     $spObjectId = $sp.Id
     Write-Output "Got Service Principal: $sp.DisplayName $spAppIdd $spClientId $spObjectId"
@@ -146,18 +146,18 @@ Function GenerateResourcesAndImage {
     $tenantId = $env:tenantId
 
     Write-Output "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
-    packer.exe
-    # packer.exe build -on-error=ask `
-    #     -var "client_id=$($spClientId)"  `
-    #     -var "client_secret=$($ServicePrincipalClientSecret)"  `
-    #     -var "subscription_id=$($SubscriptionId)"  `
-    #     -var "tenant_id=$($tenantId)"  `
-    #     -var "object_id=$($spObjectId)"  `
-    #     -var "location=$($AzureLocation)"  `
-    #     -var "resource_group=$($ResourceGroupName)"  `
-    #     -var "storage_account=$($storageAccountName)"  `
-    #     -var "install_password=$($InstallPassword)"  `
-    #     $builderScriptPath
+
+    packer.exe build -on-error=ask `
+        -var "client_id=$($spClientId)"  `
+        -var "client_secret=$($ServicePrincipalClientSecret)"  `
+        -var "subscription_id=$($SubscriptionId)"  `
+        -var "tenant_id=$($tenantId)"  `
+        -var "object_id=$($spObjectId)"  `
+        -var "location=$($AzureLocation)"  `
+        -var "resource_group=$($ResourceGroupName)"  `
+        -var "storage_account=$($storageAccountName)"  `
+        -var "install_password=$($InstallPassword)"  `
+        $builderScriptPath
 }
 
 
