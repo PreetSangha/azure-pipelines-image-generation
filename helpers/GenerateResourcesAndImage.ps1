@@ -1,6 +1,6 @@
-Install-Module AzureRM -Force -AllowClobber
-
+Install-Module AzureRM -Force -AllowClobber #-Verbose
 Import-Module AzureRM
+
 
 $ErrorActionPreference = 'Stop'
 
@@ -85,54 +85,36 @@ Function GenerateResourcesAndImage {
         [Switch] $Force
     )
 
-    $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
-    $ServicePrincipalClientSecret = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
-    $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
+    # $builderScriptPath = Get-PackerTemplatePath -RepositoryRoot $ImageGenerationRepositoryRoot -ImageType $ImageType
+    # $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
+    Write-Output "", "Creating Service Credential"
+    $password = $env:servicePrincipalKey | ConvertTo-SecureString -asPlainText -Force
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential($env:servicePrincipalId,$password)  -ErrorAction Stop
 
-    Connect-AzureRmAccount
+    Write-Output "Logging in"
+    Login-AzureRmAccount -Credential $Credential -TenantId $env:tenantId -ServicePrincipal
+
+    Write-Output "Setting Subscription"
     Set-AzureRmContext -SubscriptionId $SubscriptionId
 
     $alreadyExists = $true;
     try {
         Get-AzureRmResourceGroup -Name $ResourceGroupName
-        Write-Verbose "Resource group was found, will delete and recreate it."
     }
     catch {
-        Write-Verbose "Resource group was not found, will create it."
         $alreadyExists = $false;
     }
 
     if ($alreadyExists) {
         if($Force -eq $true) {
-            # Cleanup the resource group if it already exitsted before
+
+            Write-Output "Cleanup existing resource group $ResourceGroupName if it already exitsted before"
             Remove-AzureRmResourceGroup -Name $ResourceGroupName -Force
-            New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation
-        } else {
-            $title = "Delete Resource Group"
-            $message = "The resource group you specified already exists. Do you want to clean it up?"
-
-            $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", `
-                "Delete the resource group including all resources."
-
-            $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", `
-                "Keep the resource group and continue."
-
-            $stop = New-Object System.Management.Automation.Host.ChoiceDescription "&Stop", `
-                "Stop the current action."
-
-            $options = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no, $stop)
-            $result = $host.ui.PromptForChoice($title, $message, $options, 0)
-
-            switch ($result)
-            {
-                0 { Remove-AzureRmResourceGroup -Name $ResourceGroupName -Force; New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation }
-                1 { <# Do nothing #> }
-                2 { exit }
-            }
         }
-    } else {
-        New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation
     }
+
+    Write-Output "", "Creating resource group $ResourceGroupName"
+    New-AzureRmResourceGroup -Name $ResourceGroupName -Location $AzureLocation
 
     # This script should follow the recommended naming conventions for azure resources
     $storageAccountName = if($ResourceGroupName.EndsWith("-rg")) {
@@ -143,33 +125,40 @@ Function GenerateResourcesAndImage {
     $storageAccountName = $storageAccountName.Replace("-", "").Replace("_", "").Replace("(", "").Replace(")", "").ToLower()
     $storageAccountName += "001"
 
+    Write-Output "", "Creating Storage Account $storageAccountName"
     New-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $storageAccountName -Location $AzureLocation -SkuName "Standard_LRS"
 
-    $spDisplayName = [System.GUID]::NewGuid().ToString().ToUpper()
-    $sp = New-AzureRmADServicePrincipal -DisplayName $spDisplayName -Password (ConvertTo-SecureString $ServicePrincipalClientSecret -AsPlainText -Force)
 
+    Write-Output "", "Getting Service Principal"
+    $sp = Get-AzureRmADServicePrincipal -ServicePrincipalName $env:servicePrincipalId
     $spAppId = $sp.ApplicationId
     $spClientId = $sp.ApplicationId
     $spObjectId = $sp.Id
+    Write-Output "Got Service Principal: $sp.DisplayName $spAppIdd $spClientId $spObjectId"
+
     Start-Sleep -Seconds $SecondsToWaitForServicePrincipalSetup
 
+    Write-Output "", "Adding Contributor Role to Service Principal"
     New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $spAppId
-    Start-Sleep -Seconds $SecondsToWaitForServicePrincipalSetup
-    $sub = Get-AzureRmSubscription -SubscriptionId $SubscriptionId
-    $tenantId = $sub.TenantId
-    # "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
 
-    packer.exe build -on-error=ask `
-        -var "client_id=$($spClientId)"  `
-        -var "client_secret=$($ServicePrincipalClientSecret)"  `
-        -var "subscription_id=$($SubscriptionId)"  `
-        -var "tenant_id=$($tenantId)"  `
-        -var "object_id=$($spObjectId)"  `
-        -var "location=$($AzureLocation)"  `
-        -var "resource_group=$($ResourceGroupName)"  `
-        -var "storage_account=$($storageAccountName)"  `
-        -var "install_password=$($InstallPassword)"  `
-        $builderScriptPath
+    Start-Sleep -Seconds $SecondsToWaitForServicePrincipalSetup
+
+    Write-Output "", "Gettting tenant id"
+    $tenantId = $env:tenantId
+
+    Write-Output "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
+
+    # packer.exe build -on-error=ask `
+    #     -var "client_id=$($spClientId)"  `
+    #     -var "client_secret=$($ServicePrincipalClientSecret)"  `
+    #     -var "subscription_id=$($SubscriptionId)"  `
+    #     -var "tenant_id=$($tenantId)"  `
+    #     -var "object_id=$($spObjectId)"  `
+    #     -var "location=$($AzureLocation)"  `
+    #     -var "resource_group=$($ResourceGroupName)"  `
+    #     -var "storage_account=$($storageAccountName)"  `
+    #     -var "install_password=$($InstallPassword)"  `
+    #     $builderScriptPath
 }
 
 
