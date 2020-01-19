@@ -3,8 +3,8 @@
 trigger:
   - packer
 
-pool:
-  queue: 'serko-enterprise'
+queue:
+  name: Serko-Enterprise
 
 steps:
 
