@@ -33,5 +33,5 @@ steps:
     azureSubscription: 'BigBang'
     scriptType: 'ps'
     scriptLocation: 'scriptPath'
-    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+    scriptPath: '$(Build.SourcesDirectory)\helpers\login.ps1'
     addSpnToEnvironment: true
