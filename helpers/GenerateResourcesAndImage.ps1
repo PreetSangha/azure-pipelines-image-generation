@@ -89,7 +89,7 @@ Function GenerateResourcesAndImage {
     $ServicePrincipalClientSecret = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
     $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper();
 
-    Login-AzureRmAccount
+    Connect-AzureRmAccount
     Set-AzureRmContext -SubscriptionId $SubscriptionId
 
     $alreadyExists = $true;
