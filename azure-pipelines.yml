@@ -2,7 +2,7 @@
 
 trigger:
 - master
-- testing/20191209.1
+- preet
 
 pool:
   vmImage: 'windows-2019'
