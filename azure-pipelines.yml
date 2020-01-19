@@ -1,37 +1,83 @@
 # Preet's test Packer pipeline
 
 trigger:
-- master
-- preet
+  - master
+  - preet
 
-pool:
-  vmImage: 'windows-2019'
+  pool:
+    vmImage: 'windows-2019'
 
-steps:
-# - script: echo Hello, world!
-#   displayName: 'Run a one-line script'
+  steps:
+  # - script: echo Hello, world!
+  #   displayName: 'Run a one-line script'
 
-# - task: InlineAzurePowershell@1
-#   displayName: "Run azure inline script"
-#   inputs:
-#     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-#     ConnectedServiceNameARM: 'BigBang'
-#     Script: 'Write-Output ''Hello world'''
+  # - task: InlineAzurePowershell@1
+  #   displayName: "Run azure inline script"
+  #   inputs:
+  #     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+  #     ConnectedServiceNameARM: 'BigBang'
+  #     Script: 'Write-Output ''Hello world'''
 
-# - task: AzurePowerShell@5
-#   displayName: "Run azure GenerateResourcesAndImage script"
-#   inputs:
-#     azureSubscription: 'BigBang'
-#     ScriptType: 'FilePath'
-#     ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
-#     preferredAzurePowerShellVersion: latestVersion
+  # - task: AzurePowerShell@5
+  #   displayName: "Run azure GenerateResourcesAndImage script"
+  #   inputs:
+  #     azureSubscription: 'BigBang'
+  #     ScriptType: 'FilePath'
+  #     ScriptPath: $(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1
+  #     preferredAzurePowerShellVersion: latestVersion
 
-#  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
+  #  $env:servicePrincipalId, $env:servicePrincipalKey and $env:tenantId in your script.
 
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'BigBang'
-    scriptType: 'ps'
-    scriptLocation: 'scriptPath'
-    scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
-    addSpnToEnvironment: true
+  - task: PowerShell@2
+    displayName: Install Packer
+    inputs:
+      targetType: 'inline'
+      script: 'choco.exe install packer --yes --verbose'
+
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'BigBang'
+      scriptType: 'ps'
+      scriptLocation: 'scriptPath'
+      scriptPath: '$(Build.SourcesDirectory)\helpers\GenerateResourcesAndImage.ps1'
+      addSpnToEnvironment: true
+
+  # Build machine image
+  # Build a machine image using Packer, which may be used for Azure Virtual machine scale set deployment
+  # - task: PackerBuild@1
+  #   inputs:
+  #     #templateType: 'builtin' # Options: builtin, custom
+  #     #customTemplateLocation: # Required when templateType == Custom
+  #     #customTemplateParameters: '{}' # Optional
+  #     connectedServiceName:
+  #     #isManagedImage: true
+  #     #managedImageName: # Required when isManagedImage == True
+  #     location:
+  #     storageAccountName:
+  #     azureResourceGroup:
+  #     #baseImageSource: 'default' # Options: default, customVhd
+  #     #baseImage: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:windows' # Required when baseImageSource == Default# Options: microsoftWindowsServer:WindowsServer:2012-R2-Datacenter:Windows, microsoftWindowsServer:WindowsServer:2016-Datacenter:Windows, microsoftWindowsServer:WindowsServer:2012-Datacenter:Windows, microsoftWindowsServer:WindowsServer:2008-R2-SP1:Windows, canonical:UbuntuServer:14.04.4-LTS:Linux, canonical:UbuntuServer:16.04-LTS:Linux, redHat:RHEL:7.2:Linux, redHat:RHEL:6.8:Linux, openLogic:CentOS:7.2:Linux, openLogic:CentOS:6.8:Linux, credativ:Debian:8:Linux, credativ:Debian:7:Linux, sUSE:OpenSUSE-Leap:42.2:Linux, sUSE:SLES:12-SP2:Linux, sUSE:SLES:11-SP4:Linux
+  #     #customImageUrl: # Required when baseImageSource == CustomVhd
+  #     #customImageOSType: 'windows' # Required when baseImageSource == CustomVhd# Options: windows, linux
+  #     packagePath:
+  #     deployScriptPath:
+  #     #deployScriptArguments: # Optional
+  #     #additionalBuilderParameters: '{vm_size:Standard_D3_v2}' # Optional
+  #     #skipTempFileCleanupDuringVMDeprovision: true # Optional
+  #     #packerVersion: # Optional
+  #     #imageUri: # Optional
+  #     #imageId: # Optional
+
+  # - task: PackerBuild@1
+  #   inputs:
+  #     templateType: 'builtin'
+  #     ConnectedServiceName: 'BigBang'
+  #     isManagedImage: false
+  #     location: 'australiaeast'
+  #     storageAccountName: 'preettest001'
+  #     azureResourceGroup: 'preet-test-rg'
+  #     baseImageSource: 'customVhd'
+  #     customImageOSType: 'windows'
+  #     packagePath: 'Deployment Package'
+  #     deployScriptPath: 'Deployment script'
+  #     deployScriptArguments: 'Deployment script arguments'
