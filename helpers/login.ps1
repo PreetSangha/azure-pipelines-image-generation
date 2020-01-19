@@ -10,7 +10,8 @@ $SecondsToWaitForServicePrincipalSetup = 1;
 $SubscriptionId = $bigBangSub
 
 Write-Output "Installing Azure RM"
-Enable-AzureRmAlias
+Install-Module AzureRM -Force -AllowClobber #-Verbose
+Import-Module AzureRM
 
 " ---- "
 Get-ChildItem Env: | Sort-Object Name
@@ -32,3 +33,4 @@ $spAppId = $sp.ApplicationI
 $spClientId = $sp.ApplicationId
 $spObjectId = $sp.Id
 Write-Output "Service Principal: ",$sp.DisplayName, $spAppId, $spClientId, $spObjectId
+
