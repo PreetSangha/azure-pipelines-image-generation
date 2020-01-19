@@ -1,6 +1,6 @@
-Install-Module AzureRM
+# Install-Module AzureRM -Force -AllowClobber
 
-Import-Module AzureRM
+# Import-Module AzureRM
 
 $ErrorActionPreference = 'Stop'
 
@@ -159,7 +159,17 @@ Function GenerateResourcesAndImage {
     $tenantId = $sub.TenantId
     # "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
 
-    packer.exe build -on-error=ask -var "client_id=$($spClientId)" -var "client_secret=$($ServicePrincipalClientSecret)" -var "subscription_id=$($SubscriptionId)" -var "tenant_id=$($tenantId)" -var "object_id=$($spObjectId)" -var "location=$($AzureLocation)" -var "resource_group=$($ResourceGroupName)" -var "storage_account=$($storageAccountName)" -var "install_password=$($InstallPassword)" $builderScriptPath
+    packer.exe build -on-error=ask `
+        -var "client_id=$($spClientId)"  `
+        -var "client_secret=$($ServicePrincipalClientSecret)"  `
+        -var "subscription_id=$($SubscriptionId)"  `
+        -var "tenant_id=$($tenantId)"  `
+        -var "object_id=$($spObjectId)"  `
+        -var "location=$($AzureLocation)"  `
+        -var "resource_group=$($ResourceGroupName)"  `
+        -var "storage_account=$($storageAccountName)"  `
+        -var "install_password=$($InstallPassword)"  `
+        $builderScriptPath
 }
 
 
