@@ -31,8 +31,7 @@ steps:
   displayName: Install Packer
   inputs:
     targetType: 'inline'
-    script: |
-      | Set-ExecutionPolicy Bypass -Scope Process -Force;
+    script: |Set-ExecutionPolicy Bypass -Scope Process -Force;
       | iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
       | 'choco.exe install packer --yes --verbose'
       
