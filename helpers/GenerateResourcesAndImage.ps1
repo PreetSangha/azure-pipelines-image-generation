@@ -128,7 +128,6 @@ Function GenerateResourcesAndImage {
     Write-Output "", "Creating Storage Account $storageAccountName"
     New-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $storageAccountName -Location $AzureLocation -SkuName "Standard_LRS"
 
-
     Write-Output "", "Getting Service Principal"
     $sp = Get-AzureRmADServicePrincipal -ServicePrincipalName $env:servicePrincipalId
     $spAppId = $sp.ApplicationId
@@ -138,8 +137,8 @@ Function GenerateResourcesAndImage {
 
     Start-Sleep -Seconds $SecondsToWaitForServicePrincipalSetup
 
-    Write-Output "", "Adding Contributor Role to Service Principal"
-    New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $spAppId
+    # Write-Output "", "Adding Contributor Role to Service Principal"
+    # New-AzureRmRoleAssignment -RoleDefinitionName Contributor -ServicePrincipalName $spAppId
 
     Start-Sleep -Seconds $SecondsToWaitForServicePrincipalSetup
 
