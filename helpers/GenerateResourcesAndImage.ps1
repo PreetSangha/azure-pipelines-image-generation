@@ -1,6 +1,6 @@
-# Install-Module AzureRM -Force -AllowClobber
+Install-Module AzureRM -Force -AllowClobber
 
-# Import-Module AzureRM
+Import-Module AzureRM
 
 $ErrorActionPreference = 'Stop'
 
