@@ -147,10 +147,6 @@ Function GenerateResourcesAndImage {
     Write-Output "", "Gettting tenant id"
     $tenantId = $env:tenantId
 
-" ---- "
-Get-ChildItem Env: | Sort-Object Name
-" ---- "
-
     Write-Output "", "Note this variable-setting script for running Packer with these Azure resources in the future:", "==============================================================================================", "`$spClientId = `"$spClientId`"", "`$ServicePrincipalClientSecret = `"$ServicePrincipalClientSecret`"", "`$SubscriptionId = `"$SubscriptionId`"", "`$tenantId = `"$tenantId`"", "`$spObjectId = `"$spObjectId`"", "`$AzureLocation = `"$AzureLocation`"", "`$ResourceGroupName = `"$ResourceGroupName`"", "`$storageAccountName = `"$storageAccountName`"", "`$install_password = `"$install_password`"", ""
 
     C:\ProgramData\chocolatey\lib\packer\tools\packer.exe build -on-error=ask `
